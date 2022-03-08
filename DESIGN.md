@@ -175,7 +175,7 @@ Apache Kafka is the only stateful subsystem, but also easy to scale up, a bit ha
 
 - ###### _Requement:_ `_The system must guarantee an "at least once" SLA for sending the message.`
 
-  Kafka consumer, we will commit a message in batches, in case of crash it could have doble processing. This option is left as configuration `<PREFIX>.commit.counter`.
+  Kafka consumer, will commit messages in batches, in case of crash it could re-proccess some. This option is left as configuration `<PREFIX>.commit.counter`.
 
 # Source tree
 
