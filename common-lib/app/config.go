@@ -50,8 +50,8 @@ func configure(addr string) {
 	cfg.httpRouter = mux.NewRouter()
 	cfg.httpRouter.NotFoundHandler = handle404()
 	cfg.httpRouter.MethodNotAllowedHandler = method404()
-	// cfg.httpRouter.HandleFunc("/readyz", readyz())
-	// cfg.httpRouter.HandleFunc("/healthz", readyz())
+	cfg.httpRouter.HandleFunc("/readyz", readyz())
+	cfg.httpRouter.HandleFunc("/healthz", readyz())
 
 	cfg.httpServer = &http.Server{
 		Addr:    addr,
