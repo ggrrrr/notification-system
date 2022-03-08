@@ -175,7 +175,7 @@ Apache Kafka is the only stateful subsystem, but also easy to scale up, a bit ha
 
 - ###### _Requement:_ `_The system must guarantee an "at least once" SLA for sending the message.`
 
-  When using Kafka consumer, we will commit a message in batches, in case of crashe wil could have doble processing. This option is left as configuration `<PREFIX>.commit.counter`.
+  Kafka consumer, we will commit a message in batches, in case of crash it could have doble processing. This option is left as configuration `<PREFIX>.commit.counter`.
 
 # Source tree
 
@@ -183,6 +183,14 @@ Apache Kafka is the only stateful subsystem, but also easy to scale up, a bit ha
 - [common-lib/config/](common-lib/config/) common lib for configs and logging, based on [viper](github.com/spf13/viper) and [logrus](github.com/sirupsen/logrus)
 - [common-lib/eventbus/](common-lib/eventbus/) common lib for consuming and publishng events to Kafka, based on [github.com/confluentinc/confluent-kafka-go/kafka](github.com/confluentinc/confluent-kafka-go/kafka)
 - [configs/](configs/) basic app config file in yaml format
+- [k8s/](k8s/) basic kubernetes deploment files
+- [local/](local/) docker-compose.yaml, used for local dev and testing
+- [notifications-app/](notifications-app//) notifications app source tree
+- [retry-queue-svc/](retry-queue-svc//) retry queue source tree
+- [env-local](env-local.sh) bash script to load env from .env.local
+- [docker-compose](docker-compose.yaml) docker compolse for building imagers
+- [Dockerfile.notifications-app](Dockerfile.notifications-app) docker file for notification app
+- [Dockerfile.retry-queue-svc](Dockerfile.retry-queue-svc) docker file for retry-queue
 
 # Deployment
 
