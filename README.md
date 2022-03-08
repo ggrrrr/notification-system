@@ -227,10 +227,6 @@ EVENTBUS_DONE_TOPIC=done_topic
 RETRY_QUEUE_GROUP_ID=local
 RETRY_QUEUE_AUTO_OFFSET_RESET=beginning
 
-ASDASD=beginning
-ASDASD=earliest
-ASDASD=smallest
-
 TEST_GROUP_ID=local12331
 TEST_GROUP_INSTANCE_ID=static123
 TEST_AUTO_OFFSET_RESET=smallest
@@ -238,16 +234,13 @@ TEST_CLIENT_ID=test_app
 
 RETRY_QUEUE_SLEEP_TIME=2s
 
-
-DUMMY_ENABLE=true
-
 SLACK_ENABLE=true
 SLACK_API_URL=https://slack.com/api/chat.postMessage
 
 SMS_ENABLE=true
-SMS_API_TOKEN=ASDASDASDASD
+SMS_API_TOKEN=SOMETOKEN
 SMS_API_URL=
-
+EOF
 ```
 
 ##### Run application from console:
