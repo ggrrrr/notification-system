@@ -211,6 +211,7 @@ Load env by running `source env-local.sh`, this will export all variable from:
 Example file:
 
 ```bash
+cat > .env.local <<EOF
 LISTEN_ADDR=:6021
 
 BOOTSTRAP_SERVERS=localhost:9092
@@ -249,6 +250,30 @@ SMS_API_URL=
 
 ```
 
-# Production deployment
+##### Run application from console:
 
-You can use k8s/notifications-app.yaml and k8s/retry-queue-svc.yaml as base to create kubernetes deployment.
+###### Run retry-queue-svc from console:
+
+```bash
+source env-local.sh
+HTTP_LISTEN_ADDR=:8081 go run retry-queue-svc/main.go
+```
+
+###### Run notifications-appfrom console:
+
+```bash
+source env-local.sh
+HTTP_LISTEN_ADDR=:8081 go run notifications-app/main.go
+
+```
+
+##### Production deployment
+
+You can use:
+
+- [notifications-app.yaml](k8s/notifications-app.yaml)
+- [retry-queue-svc.yaml](k8s/retry-queue-svc.yaml)
+
+as base to create kubernetes deployment.
+
+:beers:
