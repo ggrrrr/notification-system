@@ -179,52 +179,29 @@ Apache Kafka is the only stateful subsystem, but also easy to scale up, a bit ha
 
 # Notifications system diagram
 
-```flow
-st=>start: Consume
-NotificationRequest
-err=>subroutine: Print error
-e=>end: End
-op1=>subroutine: Parse Headers
-op2=>subroutine: Parse Payload
-op3=>subroutine: Channel verify
-c1=>condition: Headers pass
-c2=>condition: Payload pass
-c3=>condition: Verify pass
-io=>operation: Process message
+```mermaid
 
-st->op1->c1(yes)->op2->c2
-c2(yes)->op3->c3(yes)->io->e
-c1(no)->err->e
-c2(no)->err->e
-c3(no)->err->e
-err->e
+  graph TD;
+    st(Consume event)-->cHeader{Verify headers};
+    cHeader -- ok --> cChannel{Verify channel};
+    cHeader -- no --> opError{print error};
+    cChannel -- ok --> op(process message)--> e(end);
+    cChannel -- no --> opError{print error}-->e;
+
 
 ```
 
 # Message process diagram
 
-```flow
-st=>start: Process message
-e=>end: End
-ioRetry=>inputoutput: Publish QueueRequest
-ioDone=>inputoutput: Publish NotificationDone
-ioErr=>inputoutput: Publish NotificationError
-push=>inputoutput: channel.Push(message)
-c=>condition: send successfull
-opRetry=>operation: retry --
-cErr=>condition: for Error
-cDone=>condition: for Done
-cRetry=>condition: for Retry
-cCounter=>condition: Retry < 1
+```mermaid
 
-st->push->cRetry
-cCounter(no)->ioRetry->e
-cCounter(yes)->ioErr->e
-cRetry(yes,right)->cCounter
-cRetry(no)->cErr
-cErr(yes,right)->ioErr->e
-cErr(no)->cDone
-cDone(yes)->ioDone->e
+  graph TD;
+    st(Process message)-->push( channel.Push )-->cRetry{is Retry};
+    cRetry -- no --> cErr{ is Error } -- no --> cDone{is Done} -- yes --> opDone( Publish Done) --> e(end);
+    cCounter -- yes --> opErr(Publish error) --> e;
+    cRetry -- yes --> cCounter{ retry < 1 } -- no --> opRetry(Publish RetryQueue) --> e;
+    cErr -- yes --> opErr(publish error) --> e;
+
 ```
 
 # Queue system diagram
