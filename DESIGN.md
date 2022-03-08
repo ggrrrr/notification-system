@@ -184,7 +184,7 @@ Apache Kafka is the only stateful subsystem, but also easy to scale up, a bit ha
 - [common-lib/eventbus/](common-lib/eventbus/) common lib for consuming and publishng events to Kafka, based on [github.com/confluentinc/confluent-kafka-go/kafka](github.com/confluentinc/confluent-kafka-go/kafka)
 - [configs/](configs/) basic app config file in yaml format
 - [k8s/](k8s/) basic kubernetes deploment files
-- [local/](local/) docker-compose.yaml, used for local dev and testing
+- [local/](local/) docker-compose.yaml, will run kafka on local docker
 - [notifications-app/](notifications-app//) notifications app source tree
 - [retry-queue-svc/](retry-queue-svc//) retry queue source tree
 - [env-local](env-local.sh) bash script to load env from .env.local
