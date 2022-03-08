@@ -177,6 +177,13 @@ Apache Kafka is the only stateful subsystem, but also easy to scale up, a bit ha
 
   When using Kafka consumer, we will commit a message in batches, in case of crashe wil could have doble processing. This option is left as configuration `<PREFIX>.commit.counter`.
 
+# Source tree
+
+- [common-lib/app/](common-lib/app/) common lib for service, includes http basic methods
+- [common-lib/config/](common-lib/config/) common lib for configs and logging, based on [viper](github.com/spf13/viper) and [logrus](github.com/sirupsen/logrus)
+- [common-lib/eventbus/](common-lib/eventbus/) common lib for consuming and publishng events to Kafka, based on [github.com/confluentinc/confluent-kafka-go/kafka](github.com/confluentinc/confluent-kafka-go/kafka)
+- [configs/](configs/) basic app config file in yaml format
+
 # Deployment
 
 1. Ci/Cd for sources
