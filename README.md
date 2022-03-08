@@ -13,8 +13,7 @@ In case of error, it will forward it to the `RetryQueue` system for later attemp
 
 ## Api Interface
 
-The system is using EventBus interface, based on Apache Kafka Pub/Sub service. Please read EVENTBUS.md
-
+The system is using EventBus interface, based on Apache Kafka Pub/Sub service.
 To send notificaiton message you need to `publish` a message to a Kafka `topic`
 with the following details:
 
@@ -30,7 +29,7 @@ with the following details:
 
 Example payloads are listed bellow.
 
-Please see `commont-lib/eventbus/events_tests.go` for examples.
+Please see [commont-lib/eventbus/events_tests.go](commont-lib/eventbus/events_tests.gomd) for examples.
 
 ## Available Channels
 
@@ -137,7 +136,7 @@ API from [https://pkg.go.dev/net/smtp]
 
 ## Configuration
 
-Configuration fileA `PWD/configs/app.yaml` will be loaded. All variable can be overwritten with OS environment variables.
+Configuration fileA [configs/app.yaml](configs/app.yaml) will be loaded. All variable can be overwritten with OS environment variables.
 Where each YAML path will be Upper case with `_` delimiter example:
 
 ```yaml
@@ -153,7 +152,7 @@ export DUMMY_ENABLE=true
 
 ## Adding new channel
 
-1. You can copy `notifications-app/channels/dummy` to `notifications-app/channels/mychannel`
+1. You can copy [notifications-app/channels/dummy](notifications-app/channels/dummy) to `notifications-app/channels/mychannel`
 2. Modify `New()` method to match your channel configuration needs.
 3. Update `Push` interface method based on your channel provider API
 4. In `main.go` add the following lines:
@@ -196,7 +195,7 @@ curl -H "Content-Type: application/json" \
 `Docker`
 `docker-compose`
 
-from `local/docker-compose.yaml` you can install kafka on local PC by running
+from [local/docker-compose.yaml](local/docker-compose.yaml) you can install kafka on local PC by running
 
 ```
 docker-compose up -d zookeeper # zookeeper needed

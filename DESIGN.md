@@ -177,6 +177,20 @@ Apache Kafka is the only stateful subsystem, but also easy to scale up, a bit ha
 
   When using Kafka consumer, we will commit a message in batches, in case of crashe wil could have doble processing. This option is left as configuration `<PREFIX>.commit.counter`.
 
+# Deployment
+
+1. Ci/Cd for sources
+
+- after each push or merge a docker image build should be triggered
+  - these should include the unit test in the sources
+- some lint check and/or global SonarQube for quality gates
+- a deployment to dev env auto triggered end to end testing ( for `RetryQueue` some benchmarks as well)
+- other test or deploy to UAT -> PROD
+- Production deployment on K8S can be based on [k8s](k8s) files
+  - auto scalling based on CPU/Ram usage can be configured
+
+2. Apache kafka could be installed on VMs or K8S
+
 # Notifications system diagram
 
 ```mermaid
