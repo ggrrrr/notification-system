@@ -252,7 +252,7 @@ source env-local.sh
 HTTP_LISTEN_ADDR=:8081 go run retry-queue-svc/main.go
 ```
 
-###### Run notifications-appfrom console:
+###### Run notifications-app from console:
 
 ```bash
 source env-local.sh
