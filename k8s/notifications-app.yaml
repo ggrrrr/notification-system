@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notifications-app
+  labels:
+    app: notifications-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: notifications-app
+  template:
+    metadata:
+      labels:
+        app: notifications-app
+    spec:
+      containers:
+        - name: retry-queue
+          image: notifications-app:letest
+          ports:
+            - containerPort: 8080
+          env:
+            - BOOTSTRAP_SERVERS: localhost:9092
+            - HTTP_LISTEN_ADDR: :8080
+            - RETRY_QUEUE_GROUP_ID: local
+            - RETRY_QUEUE_AUTO_OFFSET_RESET: earliest
+
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/config
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 3
+        volumes:
+          - name: config-volume
+            configMap:
+                name: app.yaml
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: notifications-app-configmap
+  metadata:
+  labels:
+    app: notifications-app
+data:
+  app.yaml: |
+    eventbus:
+      retry:
+        topic: retry_request
+        group:
+          id: notifications-app
+        auto:
+          offset:
+            reset: earliest
+      error:
+        topic: notification_error
+      done:
+        topic: notification_done
+

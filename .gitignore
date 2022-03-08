@@ -1,0 +1,14 @@
+.*
+!.gitignore
+advent
+!kubernetes/advent
+tmp.yaml
+*.rsa
+*.rsa.pub
+*.pem
+*.crt
+*.key
+app
+*.cer
+*.jks
+*.json

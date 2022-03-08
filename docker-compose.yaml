@@ -1,0 +1,21 @@
+version: "3.3"
+
+services:
+  notifications-app:
+    image: notification-app:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.notifications-app
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env.local
+  retry-queue:
+    image: retry-queue-svc:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.retry-queue-svc
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env.local

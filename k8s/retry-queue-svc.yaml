@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: retry-queue-svc
+  labels:
+    app: retry-queue-svc
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: retry-queue-svc
+  template:
+    metadata:
+      labels:
+        app: retry-queue-svc
+    spec:
+      containers:
+        - name: retry-queue
+          image: retry-queue-svc:letest
+          ports:
+            - containerPort: 8080
+          env:
+            - BOOTSTRAP_SERVERS: localhost:9092
+            - HTTP_LISTEN_ADDR: :8080
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/config
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 3
+        volumes:
+          - name: config-volume
+            configMap:
+                name: app.yaml
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: retry-queue-svc-configmap
+  metadata:
+  labels:
+    app: retry-queue-svc-app
+data:
+  app.yaml: |
+    event:
+      topic: notification_request
+      group:
+        id: retry-queue-svc
+      auto:
+        offset:
+          reset: earliest
+    eventbus:
+      retry:
+        topic: retry_request
+      error:
+        topic: notification_error
+      done:
+        topic: notification_done
+
+    dummy:
+      enable: false
+
+    sms:
+      enable: true
+      from: InfoSMS
+      api:
+        url: https://someurl
+
+    slack:
+      enable: true
+      api:
+        url: https://slack.com/api/chat.postMessage
+
+    email:
+      enable: true
+      smtp:
+        server: smtp.example.com
+        port: 25
+        username: john@example.com
+        sender: john@example.com
+        tls: false

@@ -1,0 +1,21 @@
+FROM golang:1.17-alpine as stage
+
+RUN set -ex &&\
+    apk add --no-progress --no-cache \
+    gcc \
+    musl-dev
+
+WORKDIR /build
+COPY go.* /build/
+RUN go mod download
+
+COPY . /build
+
+RUN GOOS=linux GOARCH=amd64 go build -a -tags musl -o /build/app retry-queue-svc/main.go
+
+FROM alpine:3.14
+WORKDIR /app
+
+COPY --from=stage /build/app /app
+CMD /app/app
+

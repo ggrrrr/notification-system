@@ -1,0 +1,54 @@
+http:
+  listen:
+    addr: :8080
+
+bootstrap:
+  servers: localhost:9092
+
+event:
+  topic: notification_request
+  group:
+    id: mygroup
+  auto:
+    offset:
+      reset: earliest
+
+eventbus:
+  retry:
+    topic: retry_request
+    group:
+      id: mygroup
+    auto:
+      offset:
+        reset: earliest
+
+  error:
+    topic: notification_error
+  done:
+    topic: notification_done
+
+dummy:
+  enable: false
+
+sms:
+  enable: true
+  from: InfoSMS
+  api:
+    # token: <TOKEN>
+    url: https://someurl
+
+slack:
+  enable: true
+  api:
+    # token: <TOKEN>
+    url: https://slack.com/api/chat.postMessage
+
+email:
+  enable: true
+  smtp:
+    server: smtp.example.com
+    port: 25
+    username: john@example.com
+    password: <PASS>
+    sender: john@example.com
+    tls: false
