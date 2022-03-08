@@ -229,17 +229,11 @@ cDone(yes)->ioDone->e
 
 # Queue system diagram
 
-```flow
-st=>start: Consume
-QueueRequest
-e=>end: End
-ioPushToApp=>inputoutput: Publish
-Original Event
-delay=>operation: time sleep
-ioPause=>inputoutput: Pause consumer
-ioResume=>inputoutput: Resume consumer
-
-
-st->ioPause->delay->ioResume->ioPushToApp->e
-
+```mermaid
+  graph TD;
+      st(start)-->ioPause[Pause consumer];
+      ioPause-->delay[time sleep];
+      delay-->ioResume(resume consumer);
+      ioResume-->ioPushToApp(Publish Original Event);
+      ioPushToApp-->e(end);
 ```
