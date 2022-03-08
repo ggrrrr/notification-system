@@ -152,6 +152,8 @@ Channels extendability:
      - RETRY will be when channel provider did not accept the message due transport or other errors.
        this event will be forwared to the `PublishRetry` topic
 
+---
+
 - ###### _Requement:_ `The system needs to be horizontally scalable.`
 
 For very fast and dynamic horizontal scaling each part of the system needs to be stateless.
@@ -161,6 +163,8 @@ Such scaling depends on the Apache Kafka Topics configuration ( number of partit
 Current implemention is that single instance will have single thread for procssing incomming events.
 
 To scale we only need to increase the number of instances per service. ( Kubernets replicas)
+
+Number of consumers per topic / group id depends on number of partitions per topic.
 We have three scenarios:
 
 1. number of partitions == instances
@@ -173,9 +177,15 @@ Best practises is to have partitions number per topic to be high, so it will ena
 
 Apache Kafka is the only stateful subsystem, but also easy to scale up, a bit hard to scale down.
 
+---
+
 - ###### _Requement:_ `_The system must guarantee an "at least once" SLA for sending the message.`
 
   Kafka consumer, will commit messages in batches, in case of crash it could re-proccess some. This option is left as configuration `<PREFIX>.commit.counter`.
+
+  The `retry queue` mechanism will also garanty high chances of successful delivery.
+
+---
 
 # Source tree
 
